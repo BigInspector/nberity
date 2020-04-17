@@ -25,7 +25,7 @@ public class ElkoProductsJobItemReader implements ItemReader<ElkoProduct> {
     @BeforeStep
     public void gatherAllElkoProducts() {
         System.out.println("ksfdksjgks");
-        elkoProducts = elkoProductsJobService.getAllElkoProducts();
+  //      elkoProducts = elkoProductsJobService.getAllElkoProducts();
     }
 
 

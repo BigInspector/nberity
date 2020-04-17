@@ -19,7 +19,7 @@ public class JobScheduler {
     @Autowired
     private Job elkoProductsJob;
 
-    @Scheduled(cron = "0 0 */3 * * *")
+  //  @Scheduled(cron = "0 0 */3 * * *")
     public void runElkoProductsJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         jobLauncher.run(elkoProductsJob, null);
     }

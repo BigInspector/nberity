@@ -1,7 +1,9 @@
 package com.nberity.application.authentication.controller;
 
+import com.nberity.application.customersystem.entity.Customer;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,6 +70,12 @@ public class AuthenticationController {
         return user;
     }
 
+    @GetMapping(produces = "application/json")
+    @RequestMapping({ "/employees/validateLogin" })
+    public Customer validateLogin() {
+        return new Customer("User successfully authenticated");
+    }
+
     private List<Employee> createList() {
         List<Employee> tempEmployees = new ArrayList<>();
         Employee emp1 = new Employee();
@@ -84,5 +92,10 @@ public class AuthenticationController {
         tempEmployees.add(emp1);
         tempEmployees.add(emp2);
         return tempEmployees;
+    }
+
+    @RequestMapping({ "/hello" })
+    public String hello() {
+        return "Hello World";
     }
 }

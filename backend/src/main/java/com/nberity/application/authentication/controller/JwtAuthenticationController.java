@@ -4,6 +4,7 @@ import com.nberity.application.authentication.dto.JwtRequest;
 import com.nberity.application.authentication.dto.JwtResponse;
 import com.nberity.application.authentication.service.JwtUserDetailsService;
 import com.nberity.application.authentication.util.JwtTokenUtil;
+import com.nberity.application.usersystem.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,6 +42,11 @@ public class JwtAuthenticationController {
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new JwtResponse(token));
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
+        return ResponseEntity.ok(userDetailsService.save(user));
     }
 
     private void authenticate(String username, String password) throws Exception {

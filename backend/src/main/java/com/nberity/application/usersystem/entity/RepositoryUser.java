@@ -1,4 +1,4 @@
-package com.nberity.application.customersystem.entity;
+package com.nberity.application.usersystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -11,13 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
-public class User {
+public class RepositoryUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long user_id;
+    private long id;
     @Column
     private String username;
     @Column

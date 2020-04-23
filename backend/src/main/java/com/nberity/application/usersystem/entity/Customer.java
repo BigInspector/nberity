@@ -1,4 +1,4 @@
-package com.nberity.application.customersystem.entity;
+package com.nberity.application.usersystem.entity;
 
 public class Customer {
 

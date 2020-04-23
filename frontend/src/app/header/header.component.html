@@ -1,10 +1,10 @@
 <header>
   <nav class ="navbar navbar-expand-md navbar-dark bg-dark">
-    <div><a href="https://www.javainuse.com" class="navbar-brand">NBerity</a></div>
+    <div class="navbar-brand">NBerity</div>
 
     <ul class="navbar-nav">
-      <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/" class="nav-link">View Employees</a></li>
-      <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/addemployee" class="nav-link">Add New Employee</a></li>
+      <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/" class="nav-link">View products</a></li>
+      <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/addemployee" class="nav-link">Add New Product</a></li>
       <li><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
       <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
     </ul>

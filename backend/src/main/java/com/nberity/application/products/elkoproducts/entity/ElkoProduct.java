@@ -1,4 +1,4 @@
-package com.nberity.application.cronjobs.elkoproductsjob.entity;
+package com.nberity.application.products.elkoproducts.entity;
 
 import lombok.Data;
 
@@ -95,4 +95,6 @@ public class ElkoProduct {
 
     @Column(name = "incoming_quantity")
     private Integer incomingQuantity;
+
+
 }

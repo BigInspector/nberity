@@ -1,6 +1,6 @@
 package com.nberity.application.cronjobs.elkoproductsjob;
 
-import com.nberity.application.cronjobs.elkoproductsjob.entity.ElkoProduct;
+import com.nberity.application.products.elkoproducts.entity.ElkoProduct;
 import com.nberity.application.cronjobs.elkoproductsjob.repository.ElkoProductsJobRepository;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class ElkoProductsJobItemWriter implements ItemWriter<ElkoProduct> {
         total += items.size();
         long start = System.currentTimeMillis();
 
-  //      elkoProductsJobRepository.saveAll(items);
+ //       elkoProductsJobRepository.saveAll(items);
         long finish = System.currentTimeMillis();
         System.out.println("Time elapsed: " + ((finish - start) / 1000 ));
     }

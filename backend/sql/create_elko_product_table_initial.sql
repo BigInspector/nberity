@@ -4,7 +4,7 @@ CREATE TABLE elko_product (
     elko_code int,
     name varchar(255),
     manufacturer_code varchar(50),
-	vendor_name varchar(100),
+	vendor_name varchar(255),
 	vendor_code varchar(15),
 	catalog varchar(20),
 	quantity varchar(20),

@@ -1,6 +1,7 @@
 package com.nberity.application.cronjobs;
 
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -19,8 +20,10 @@ public class JobScheduler {
     @Autowired
     private Job elkoProductsJob;
 
-  //  @Scheduled(cron = "0 0 */3 * * *")
+ //   @Scheduled(cron = "0 0 */3 * * *")
+    @Scheduled(cron = "*/5 * * * * MON-FRI")
     public void runElkoProductsJob() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        jobLauncher.run(elkoProductsJob, null);
+        JobParameters parameters = new JobParameters();
+        jobLauncher.run(elkoProductsJob, parameters);
     }
 }

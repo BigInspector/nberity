@@ -5,12 +5,14 @@ import {AddEmployeeComponent} from "./add-employee/add-employee.component";
 import {LoginComponent} from "./authentication/login/login.component";
 import {LogoutComponent} from "./authentication/logout/logout.component";
 import {AuthGuardService} from "./authentication/auth-guard.service";
+import {ElkoproductsComponent} from "./elkoproducts/elkoproducts.component";
 
 const routes: Routes = [
   { path:'', component: EmployeeComponent, canActivate:[AuthGuardService]},
   { path:'addemployee', component: AddEmployeeComponent, canActivate:[AuthGuardService]},
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent, canActivate:[AuthGuardService] },
+  { path: 'elko-products', component: ElkoproductsComponent, canActivate:[AuthGuardService]}
 ];
 
 @NgModule({

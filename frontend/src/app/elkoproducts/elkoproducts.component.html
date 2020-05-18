@@ -1,0 +1,37 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container">
+  <h2 class="text-secondary text-center">{{ title }}!</h2>
+  <hr />
+
+  <div>
+    <h4 class="text-info">Displaying products data.</h4>
+    <div> </div>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Currency</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let elkoProduct of elkoProductPage.content | paginate: { itemsPerPage: count, currentPage: p }">
+        <td>{{elkoProduct.id}}</td>
+        <td>{{elkoProduct.name}}</td>
+        <td><img src="{{elkoProduct.imagePath}} " width="80" height="60"/></td>
+        <td>{{elkoProduct.fullDsc}}</td>
+        <td>{{elkoProduct.price}}</td>
+        <td>{{elkoProduct.currency}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--Including the pagination control.-->
+  <div class="text-right">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>

@@ -2,7 +2,7 @@ package com.nberity.application.cronjobs.elkoproductsjob.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nberity.application.cronjobs.elkoproductsjob.entity.ElkoProduct;
+import com.nberity.application.products.elkoproducts.entity.ElkoProduct;
 import okhttp3.*;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +38,6 @@ public class ElkoProductsJobService {
             e.printStackTrace();
         }
         return null;
-
     }
 
     private String getAllElkoProductsJsonArrayString(String bearerToken) {
@@ -48,7 +47,7 @@ public class ElkoProductsJobService {
                 .addHeader("Accept", "application/json")
                 .addHeader("Authorization", "Bearer " + bearerToken)
                 .build();
-        Response response2 = null;
+        Response response2;
 
         try {
             response2 = client.newCall(allElkoProductsRequest).execute();

@@ -1,6 +1,6 @@
 package com.nberity.application.cronjobs.elkoproductsjob;
 
-import com.nberity.application.cronjobs.elkoproductsjob.entity.ElkoProduct;
+import com.nberity.application.products.elkoproducts.entity.ElkoProduct;
 import com.nberity.application.cronjobs.elkoproductsjob.service.ElkoProductsJobService;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.item.ItemReader;

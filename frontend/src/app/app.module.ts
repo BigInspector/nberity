@@ -11,6 +11,8 @@ import { LoginComponent } from './authentication/login/login.component';
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { HeaderComponent } from './header/header.component';
 import {BasicAuthHttpInterceptorService} from "./authentication/basic-auth-http-interceptor.service";
+import { ElkoproductsComponent } from './elkoproducts/elkoproducts.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -23,12 +25,14 @@ import {BasicAuthHttpInterceptorService} from "./authentication/basic-auth-http-
     LoginComponent,
     LogoutComponent,
     HeaderComponent,
+    ElkoproductsComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [
     {

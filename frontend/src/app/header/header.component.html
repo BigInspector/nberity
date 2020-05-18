@@ -5,6 +5,7 @@
     <ul class="navbar-nav">
       <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/" class="nav-link">View products</a></li>
       <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/addemployee" class="nav-link">Add New Product</a></li>
+      <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/elko-products" class="nav-link">Elko Products</a></li>
       <li><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li>
       <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
     </ul>

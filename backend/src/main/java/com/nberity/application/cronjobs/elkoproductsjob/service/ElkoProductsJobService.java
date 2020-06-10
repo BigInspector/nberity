@@ -1,86 +1,92 @@
 package com.nberity.application.cronjobs.elkoproductsjob.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nberity.application.products.elkoproducts.entity.ElkoProduct;
-import okhttp3.*;
+import com.nberity.application.products.elkoproducts.repository.ElkoProductsRepository;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Map;
 
 @Service
 public class ElkoProductsJobService {
 
-    private OkHttpClient client;
+    private ElkoProductsRepository elkoProductsRepository;
 
-    private static final Long READ_TIMEOUT = 10L;
+    private ElkoProductsJobWSClient elkoProductsJobWSClient;
 
-    private MediaType mediaType = MediaType.parse("application/json");
+    private static final String UNIT_GROSS_WEIGHT = "UNIT_GROSS_WEIGHT";
 
-    private static final String TOKEN_URL = "https://api.elkogroup.com/v3.0/api/Token";
+    private static final String UNIT_GROSS_WEIGHT_UNIT = "UNIT_GROSS_WEIGHT_UNIT";
 
-    private static final String PRODUCT_URL = "https://api.elkogroup.com/v3.0/api/Catalog/Products";
-
-    private ElkoProductsJobService() {
-        initializeHttpClient();
+    @Autowired
+    public ElkoProductsJobService(ElkoProductsRepository elkoProductsRepository,
+                                  ElkoProductsJobWSClient elkoProductsJobWSClient) {
+        this.elkoProductsRepository = elkoProductsRepository;
+        this.elkoProductsJobWSClient = elkoProductsJobWSClient;
     }
 
     public List<ElkoProduct> getAllElkoProducts() {
-        String bearerToken = retrieveBearerToken();
-        String allElkoProductsJsonArrayString = getAllElkoProductsJsonArrayString(bearerToken);
-        ObjectMapper mapper = new ObjectMapper();
+        return elkoProductsJobWSClient.getAllElkoProducts();
+    }
+
+    public Integer getMostRecentProductsVersionNr() {
+        Integer topVersionNr = elkoProductsRepository.getTopVersionNumber();
+        if (topVersionNr == null) {
+            topVersionNr = 0;
+        }
+        return topVersionNr;
+    }
+
+    public void updateElkoProductMeasurements(Long elkoCode) {
+        String productInfo = elkoProductsJobWSClient.getProductInfo(elkoCode);
+        JSONArray jsonArray;
         try {
-            return Arrays.asList(mapper.readValue(allElkoProductsJsonArrayString, ElkoProduct[].class));
-        } catch (JsonProcessingException e) {
+            jsonArray = new JSONArray(productInfo);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+                if (object.get("criteria").equals("Unit Net Weight")) {
+                    elkoProductsRepository.updateProductNetWeight(object.get("value").toString(), object.get("measurement").toString(), elkoCode);
+                } else if (object.get("criteria").equals("Unit Gross Weight")) {
+                    elkoProductsRepository.updateProductGrossWeight(object.get("value").toString(), object.get("measurement").toString(), elkoCode);
+                } else if (object.get("criteria").equals("Shipping Box Height")) {
+                    elkoProductsRepository.updateShippingBoxHeight(object.get("value").toString(), object.get("measurement").toString(), elkoCode);
+                } else if (object.get("criteria").equals("Shipping Box Width")) {
+                    elkoProductsRepository.updateShippingBoxWidth(object.get("value").toString(), object.get("measurement").toString(), elkoCode);
+                } else if (object.get("criteria").equals("Shipping Box Depth")) {
+                    elkoProductsRepository.updateShippingBoxDepth(object.get("value").toString(), object.get("measurement").toString(), elkoCode);
+                } else if (object.get("criteria").equals("Shipping Box Weight")) {
+                    elkoProductsRepository.updateShippingBoxWeight(object.get("value").toString(), object.get("measurement").toString(), elkoCode);
+                }
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
-    private String getAllElkoProductsJsonArrayString(String bearerToken) {
-        Request allElkoProductsRequest = new Request.Builder()
-                .url(PRODUCT_URL)
-                .get()
-                .addHeader("Accept", "application/json")
-                .addHeader("Authorization", "Bearer " + bearerToken)
-                .build();
-        Response response2;
-
-        try {
-            response2 = client.newCall(allElkoProductsRequest).execute();
-            return response2.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    // Only for testing database connection
+    public Integer getTestNumber() {
+        return elkoProductsRepository.getTestNumber();
     }
 
-    private String retrieveBearerToken() {
-        RequestBody body = RequestBody.create(mediaType, "{\n\"username\": \"itoleg\",\n\"password\": \"euyUU4H4FaJFBzL\"\n}");
-        Request request = new Request.Builder()
-                .url(TOKEN_URL)
-                .post(body)
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "text/plain")
-                .build();
-
-        Response response;
-        try {
-            response = client.newCall(request).execute();
-            return response.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public void deleteOldVersionNumbers() {
+        elkoProductsRepository.deleteOldVersionNumbers();
     }
 
-    private void initializeHttpClient() {
-        client = new OkHttpClient.Builder()
-                .readTimeout(READ_TIMEOUT, TimeUnit.MINUTES)
-                .build();
+    public List<Long> getAllLatestProductsElkoCodes() {
+        return elkoProductsRepository.getAllLatestProductsElkoCodes();
     }
 
+    public void saveAllElkoProducts(List<ElkoProduct> items) {
+        elkoProductsRepository.saveAll(items);
+    }
+
+
+    public void updateElkoProductsMeasurements() {
+
+    }
 }

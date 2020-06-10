@@ -16,16 +16,24 @@ public class ElkoProductsJobConfig {
 
     @Bean
     public Job elkoProductsJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
-                               ItemReader<ElkoProduct> elkoProductsJobItemReader, ItemWriter<ElkoProduct> elkoProductsJobItemWriter) {
+                               ItemReader<ElkoProduct> elkoProductsJobItemReader, ItemWriter<ElkoProduct> elkoProductsJobItemWriter,
+                               ItemReader<Long> elkoProductsMeasurementsItemReader, ItemWriter<Long> elkoProductsMeasurementsItemWriter) {
         Step step = stepBuilderFactory.get("step1")
                 .<ElkoProduct, ElkoProduct>chunk(1000)
                 .reader(elkoProductsJobItemReader)
                 .writer(elkoProductsJobItemWriter)
                 .build();
 
+        Step step2 = stepBuilderFactory.get("step2")
+                .<Long, Long>chunk(1000)
+                .reader(elkoProductsMeasurementsItemReader)
+                .writer(elkoProductsMeasurementsItemWriter)
+                .build();
+
         return jobBuilderFactory.get("elkoProductsJob")
                 .incrementer(new RunIdIncrementer())
                 .start(step)
+                .next(step2)
                 .build();
 
     }

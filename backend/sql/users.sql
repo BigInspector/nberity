@@ -1,5 +1,10 @@
-CREATE TABLE users (
-    id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username varchar(20),
-    password varchar(255)
-)
+CREATE TABLE public."user"
+(
+    user_id serial NOT NULL,
+    username character(20) NOT NULL,
+    password text NOT NULL,
+    PRIMARY KEY (user_id)
+);
+
+ALTER TABLE public."user"
+    OWNER to postgres;

@@ -96,5 +96,42 @@ public class ElkoProduct {
     @Column(name = "incoming_quantity")
     private Integer incomingQuantity;
 
+    @Column(name = "unit_net_weight")
+    private String unitNetWeight;
 
+    @Column(name = "unit_net_weight_measure_unit")
+    private String unitNetWeightMeasureUnit;
+
+    @Column(name = "unit_gross_weight")
+    private String unitGrossWeight;
+
+    @Column(name = "unit_gross_weight_measure_unit")
+    private String unitGrossWeightMeasureUnit;
+
+    @Column(name = "shipping_box_height")
+    private String shippingBoxHeight;
+
+    @Column(name = "shipping_box_height_measure_unit")
+    private String shippingBoxHeightMeasureUnit;
+
+    @Column(name = "shipping_box_width")
+    private String shippingBoxWidth;
+
+    @Column(name = "shipping_box_width_measure_unit")
+    private String shippingBoxWidthMeasureUnit;
+
+    @Column(name = "shipping_box_depth")
+    private String shippingBoxDepth;
+
+    @Column(name = "shipping_box_depth_measure_unit")
+    private String shippingBoxDepthMeasureUnit;
+
+    @Column(name = "shipping_box_weight")
+    private String shippingBoxWeight;
+
+    @Column(name = "shipping_box_weight_measure_unit")
+    private String shippingBoxWeightMeasureUnit;
+
+    @Column(name = "version_nr")
+    private Integer versionNr;
 }

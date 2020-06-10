@@ -1,3 +1,6 @@
 group 'com.nberity'
 version '1.0-SNAPSHOT'
 
+task stage {
+    dependsOn installDist
+}
